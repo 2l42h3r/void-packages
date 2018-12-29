@@ -1,0 +1,22 @@
+# Template file for 'zen-kernel'
+pkgname=zen-kernel
+version=4.19
+revision=2
+#wrksrc=
+create_wrksrc=yes
+#only_for_archs="i686 x86_64 x86_64-musl"
+build_style=gnu-configure
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends=""
+makedepends="git"
+depends=""
+short_desc=""
+maintainer="Stanisław Uss <uss.stanislaw@protonmail.com>"
+license="GPL-3.0-or-later"
+homepage=""
+
+
