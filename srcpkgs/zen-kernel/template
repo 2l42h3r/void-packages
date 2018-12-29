@@ -1,22 +1,49 @@
-# Template file for 'zen-kernel'
 pkgname=zen-kernel
-version=4.19
-revision=2
-#wrksrc=
+version=4.19.13
+revision=1
+wrksrc=${pkgname}-${version}
 create_wrksrc=yes
-#only_for_archs="i686 x86_64 x86_64-musl"
-build_style=gnu-configure
 #configure_args=""
 #make_build_args=""
 #make_install_args=""
 #conf_files=""
 #make_dirs="/var/log/dir 0755 root root"
 hostmakedepends=""
-makedepends="git"
+makedepends="git base-devel"
+#elfutils-devel libressl-devel"
 depends=""
-short_desc=""
+short_desc="Zen Patched Kernel Sources"
 maintainer="Stanisław Uss <uss.stanislaw@protonmail.com>"
-license="GPL-3.0-or-later"
-homepage=""
+license="GPL-2.0"
+homepage="http://zen-kernel.org"
 
+do_fetch(){
+	git clone -b "4.19/master" --single-branch https://github.com/zen-kernel/zen-kernel ${wrksrc}
+}
 
+do_configure(){
+	file="${wrksrc}/.config"
+	if [ -f "$file" ]
+	then
+		make syncconfig
+	else
+		make defconfig
+	fi
+}
+
+pre_build(){
+	make modules_prepare
+}
+
+do_build(){
+	make
+}
+
+do_install(){
+	make install
+	make modules_install
+}
+
+post_install() {
+	dracut
+}	 
